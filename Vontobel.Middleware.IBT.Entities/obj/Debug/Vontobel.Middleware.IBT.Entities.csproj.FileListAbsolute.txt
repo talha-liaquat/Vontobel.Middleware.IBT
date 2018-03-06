@@ -1,0 +1,10 @@
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\VontobelDB.mdf
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\VontobelDB_log.ldf
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\Vontobel.Middleware.IBT.Entities.dll.config
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\Vontobel.Middleware.IBT.Entities.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\Vontobel.Middleware.IBT.Entities.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\EntityFramework.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\bin\Debug\EntityFramework.xml
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\obj\Debug\Vontobel.Middleware.IBT.Entities.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\obj\Debug\Vontobel.Middleware.IBT.Entities.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Entities\obj\Debug\Vontobel.Middleware.IBT.Entities.csprojResolveAssemblyReference.cache

@@ -1,0 +1,11 @@
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.Common.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.Contracts.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.Common.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\bin\Debug\Vontobel.Middleware.IBT.Contracts.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\obj\Debug\Vontobel.Middleware.IBT.csprojResolveAssemblyReference.cache
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\obj\Debug\Vontobel.Middleware.IBT.Resources.resources
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\obj\Debug\Vontobel.Middleware.IBT.csproj.GenerateResource.Cache
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\obj\Debug\Vontobel.Middleware.IBT.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT\obj\Debug\Vontobel.Middleware.IBT.pdb

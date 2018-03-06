@@ -1,0 +1,596 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="VontobelDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="250" />
+          <Property Name="Code" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="Picked" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageContent">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MessageParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="MessageId" Type="varchar" MaxLength="32" />
+          <Property Name="Key" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="500" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="MessageProtocol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Type" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Partner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="PartnerSubscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PartnerId" Type="varchar" MaxLength="32" />
+          <Property Name="EventId" Type="varchar" MaxLength="32" />
+          <Property Name="MessageProtocolId" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <EntityType Name="PartnerSubscriptionParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PartnerSubscriptionId" Type="varchar" MaxLength="32" />
+          <Property Name="Key" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="Value" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="SubscriptionMessageLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PartnerSubscriptionId" Type="varchar" MaxLength="32" />
+          <Property Name="Picked" Type="int" Nullable="false" />
+          <Property Name="MessageId" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <Association Name="FK__MessageCo__Messa__0C50D423">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="MessageContent" Type="Self.MessageContent" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageContent">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MessagePa__Messa__10216507">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="MessageParameter" Type="Self.MessageParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageParameter">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Event__1C873BEC">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Messa__1D7B6025">
+          <End Role="MessageProtocol" Type="Self.MessageProtocol" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageProtocol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="MessageProtocolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Partn__1B9317B3">
+          <End Role="Partner" Type="Self.Partner" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Partn__2057CCD0">
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="0..1" />
+          <End Role="PartnerSubscriptionParameter" Type="Self.PartnerSubscriptionParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscriptionParameter">
+              <PropertyRef Name="PartnerSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Messa__251C81ED">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="SubscriptionMessageLog" Type="Self.SubscriptionMessageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionMessageLog">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Partn__2334397B">
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="0..1" />
+          <End Role="SubscriptionMessageLog" Type="Self.SubscriptionMessageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionMessageLog">
+              <PropertyRef Name="PartnerSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VontobelDBModelStoreContainer">
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageContent" EntityType="Self.MessageContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageParameter" EntityType="Self.MessageParameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MessageProtocol" EntityType="Self.MessageProtocol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartnerSubscription" EntityType="Self.PartnerSubscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PartnerSubscriptionParameter" EntityType="Self.PartnerSubscriptionParameter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubscriptionMessageLog" EntityType="Self.SubscriptionMessageLog" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MessageCo__Messa__0C50D423" Association="Self.FK__MessageCo__Messa__0C50D423">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="MessageContent" EntitySet="MessageContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MessagePa__Messa__10216507" Association="Self.FK__MessagePa__Messa__10216507">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="MessageParameter" EntitySet="MessageParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Event__1C873BEC" Association="Self.FK__PartnerSu__Event__1C873BEC">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Messa__1D7B6025" Association="Self.FK__PartnerSu__Messa__1D7B6025">
+            <End Role="MessageProtocol" EntitySet="MessageProtocol" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Partn__1B9317B3" Association="Self.FK__PartnerSu__Partn__1B9317B3">
+            <End Role="Partner" EntitySet="Partner" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscription" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Partn__2057CCD0" Association="Self.FK__PartnerSu__Partn__2057CCD0">
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscription" />
+            <End Role="PartnerSubscriptionParameter" EntitySet="PartnerSubscriptionParameter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Messa__251C81ED" Association="Self.FK__Subscript__Messa__251C81ED">
+            <End Role="Message" EntitySet="Message" />
+            <End Role="SubscriptionMessageLog" EntitySet="SubscriptionMessageLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Partn__2334397B" Association="Self.FK__Subscript__Partn__2334397B">
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscription" />
+            <End Role="SubscriptionMessageLog" EntitySet="SubscriptionMessageLog" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="VontobelDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="Int32" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="PartnerSubscriptions" Relationship="Self.FK__PartnerSu__Event__5E8A0973" FromRole="Event" ToRole="PartnerSubscription" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="MessageContent" Relationship="Self.FK__MessageCo__Messa__4E53A1AA" FromRole="Message" ToRole="MessageContent" />
+          <NavigationProperty Name="MessageParameters" Relationship="Self.FK__MessagePa__Messa__5224328E" FromRole="Message" ToRole="MessageParameter" />
+          <NavigationProperty Name="SubscriptionMessageLogs" Relationship="Self.FK__Subscript__Messa__6442E2C9" FromRole="Message" ToRole="SubscriptionMessageLog" />
+          <Property Name="Picked" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MessageContent">
+          <Key>
+            <PropertyRef Name="MessageId" />
+          </Key>
+          <Property Name="MessageId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Message" Relationship="Self.FK__MessageCo__Messa__4E53A1AA" FromRole="MessageContent" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="MessageParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MessageId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Key" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Message" Relationship="Self.FK__MessagePa__Messa__5224328E" FromRole="MessageParameter" ToRole="Message" />
+        </EntityType>
+        <EntityType Name="MessageProtocol">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="PartnerSubscriptions" Relationship="Self.FK__PartnerSu__Messa__5F7E2DAC" FromRole="MessageProtocol" ToRole="PartnerSubscription" />
+        </EntityType>
+        <EntityType Name="Partner">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="PartnerSubscriptions" Relationship="Self.FK__PartnerSu__Partn__5D95E53A" FromRole="Partner" ToRole="PartnerSubscription" />
+        </EntityType>
+        <EntityType Name="PartnerSubscription">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PartnerId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="EventId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="MessageProtocolId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK__PartnerSu__Event__5E8A0973" FromRole="PartnerSubscription" ToRole="Event" />
+          <NavigationProperty Name="MessageProtocol" Relationship="Self.FK__PartnerSu__Messa__5F7E2DAC" FromRole="PartnerSubscription" ToRole="MessageProtocol" />
+          <NavigationProperty Name="Partner" Relationship="Self.FK__PartnerSu__Partn__5D95E53A" FromRole="PartnerSubscription" ToRole="Partner" />
+          <NavigationProperty Name="SubscriptionMessageLogs" Relationship="Self.FK__Subscript__Partn__625A9A57" FromRole="PartnerSubscription" ToRole="SubscriptionMessageLog" />
+          <NavigationProperty Name="PartnerSubscriptionParameters" Relationship="VontobelDBModel.FK__PartnerSu__Partn__2057CCD0" FromRole="PartnerSubscription" ToRole="PartnerSubscriptionParameter" />
+        </EntityType>
+        <EntityType Name="SubscriptionMessageLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PartnerSubscriptionId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Picked" Type="Int32" Nullable="false" />
+          <Property Name="MessageId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Message" Relationship="Self.FK__Subscript__Messa__6442E2C9" FromRole="SubscriptionMessageLog" ToRole="Message" />
+          <NavigationProperty Name="PartnerSubscription" Relationship="Self.FK__Subscript__Partn__625A9A57" FromRole="SubscriptionMessageLog" ToRole="PartnerSubscription" />
+        </EntityType>
+        <Association Name="FK__PartnerSu__Event__5E8A0973">
+          <End Role="Event" Type="Self.Event" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MessageCo__Messa__4E53A1AA">
+          <End Role="Message" Type="Self.Message" Multiplicity="1" />
+          <End Role="MessageContent" Type="Self.MessageContent" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageContent">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MessagePa__Messa__5224328E">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="MessageParameter" Type="Self.MessageParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MessageParameter">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Messa__6442E2C9">
+          <End Role="Message" Type="Self.Message" Multiplicity="0..1" />
+          <End Role="SubscriptionMessageLog" Type="Self.SubscriptionMessageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionMessageLog">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Messa__5F7E2DAC">
+          <End Role="MessageProtocol" Type="Self.MessageProtocol" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MessageProtocol">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="MessageProtocolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PartnerSu__Partn__5D95E53A">
+          <End Role="Partner" Type="Self.Partner" Multiplicity="0..1" />
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partner">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscription">
+              <PropertyRef Name="PartnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Subscript__Partn__625A9A57">
+          <End Role="PartnerSubscription" Type="Self.PartnerSubscription" Multiplicity="0..1" />
+          <End Role="SubscriptionMessageLog" Type="Self.SubscriptionMessageLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="SubscriptionMessageLog">
+              <PropertyRef Name="PartnerSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VontobelDBConnection" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="MessageContents" EntityType="Self.MessageContent" />
+          <EntitySet Name="MessageParameters" EntityType="Self.MessageParameter" />
+          <EntitySet Name="MessageProtocols" EntityType="Self.MessageProtocol" />
+          <EntitySet Name="Partners" EntityType="Self.Partner" />
+          <EntitySet Name="PartnerSubscriptions" EntityType="Self.PartnerSubscription" />
+          <EntitySet Name="SubscriptionMessageLogs" EntityType="Self.SubscriptionMessageLog" />
+          <AssociationSet Name="FK__PartnerSu__Event__5E8A0973" Association="Self.FK__PartnerSu__Event__5E8A0973">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MessageCo__Messa__4E53A1AA" Association="Self.FK__MessageCo__Messa__4E53A1AA">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="MessageContent" EntitySet="MessageContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MessagePa__Messa__5224328E" Association="Self.FK__MessagePa__Messa__5224328E">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="MessageParameter" EntitySet="MessageParameters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Messa__6442E2C9" Association="Self.FK__Subscript__Messa__6442E2C9">
+            <End Role="Message" EntitySet="Messages" />
+            <End Role="SubscriptionMessageLog" EntitySet="SubscriptionMessageLogs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Messa__5F7E2DAC" Association="Self.FK__PartnerSu__Messa__5F7E2DAC">
+            <End Role="MessageProtocol" EntitySet="MessageProtocols" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PartnerSu__Partn__5D95E53A" Association="Self.FK__PartnerSu__Partn__5D95E53A">
+            <End Role="Partner" EntitySet="Partners" />
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscriptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Subscript__Partn__625A9A57" Association="Self.FK__Subscript__Partn__625A9A57">
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscriptions" />
+            <End Role="SubscriptionMessageLog" EntitySet="SubscriptionMessageLogs" />
+          </AssociationSet>
+          <EntitySet Name="PartnerSubscriptionParameters" EntityType="VontobelDBModel.PartnerSubscriptionParameter" />
+          <AssociationSet Name="FK__PartnerSu__Partn__2057CCD0" Association="VontobelDBModel.FK__PartnerSu__Partn__2057CCD0">
+            <End Role="PartnerSubscription" EntitySet="PartnerSubscriptions" />
+            <End Role="PartnerSubscriptionParameter" EntitySet="PartnerSubscriptionParameters" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="PartnerSubscriptionParameter">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PartnerSubscriptionId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Key" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PartnerSubscription" Relationship="VontobelDBModel.FK__PartnerSu__Partn__2057CCD0" FromRole="PartnerSubscriptionParameter" ToRole="PartnerSubscription" />
+        </EntityType>
+        <Association Name="FK__PartnerSu__Partn__2057CCD0">
+          <End Type="VontobelDBModel.PartnerSubscription" Role="PartnerSubscription" Multiplicity="0..1" />
+          <End Type="VontobelDBModel.PartnerSubscriptionParameter" Role="PartnerSubscriptionParameter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartnerSubscription">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PartnerSubscriptionParameter">
+              <PropertyRef Name="PartnerSubscriptionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="VontobelDBModelStoreContainer" CdmEntityContainer="VontobelDBConnection">
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="VontobelDBModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="VontobelDBModel.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Picked" ColumnName="Picked" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageContents">
+            <EntityTypeMapping TypeName="VontobelDBModel.MessageContent">
+              <MappingFragment StoreEntitySet="MessageContent">
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageParameters">
+            <EntityTypeMapping TypeName="VontobelDBModel.MessageParameter">
+              <MappingFragment StoreEntitySet="MessageParameter">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageProtocols">
+            <EntityTypeMapping TypeName="VontobelDBModel.MessageProtocol">
+              <MappingFragment StoreEntitySet="MessageProtocol">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partners">
+            <EntityTypeMapping TypeName="VontobelDBModel.Partner">
+              <MappingFragment StoreEntitySet="Partner">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartnerSubscriptions">
+            <EntityTypeMapping TypeName="VontobelDBModel.PartnerSubscription">
+              <MappingFragment StoreEntitySet="PartnerSubscription">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PartnerId" ColumnName="PartnerId" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="MessageProtocolId" ColumnName="MessageProtocolId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubscriptionMessageLogs">
+            <EntityTypeMapping TypeName="VontobelDBModel.SubscriptionMessageLog">
+              <MappingFragment StoreEntitySet="SubscriptionMessageLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PartnerSubscriptionId" ColumnName="PartnerSubscriptionId" />
+                <ScalarProperty Name="Picked" ColumnName="Picked" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartnerSubscriptionParameters">
+            <EntityTypeMapping TypeName="VontobelDBModel.PartnerSubscriptionParameter">
+              <MappingFragment StoreEntitySet="PartnerSubscriptionParameter">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="PartnerSubscriptionId" ColumnName="PartnerSubscriptionId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,5 @@
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Contracts\bin\Debug\Vontobel.Middleware.IBT.Contracts.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Contracts\bin\Debug\Vontobel.Middleware.IBT.Contracts.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Contracts\obj\Debug\Vontobel.Middleware.IBT.Contracts.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Contracts\obj\Debug\Vontobel.Middleware.IBT.Contracts.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Contracts\obj\Debug\Vontobel.Middleware.IBT.Contracts.csprojResolveAssemblyReference.cache

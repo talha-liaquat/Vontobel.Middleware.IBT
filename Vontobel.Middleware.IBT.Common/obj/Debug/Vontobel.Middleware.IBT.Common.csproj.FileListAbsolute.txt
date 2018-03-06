@@ -1,0 +1,4 @@
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Common\bin\Debug\Vontobel.Middleware.IBT.Common.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Common\bin\Debug\Vontobel.Middleware.IBT.Common.pdb
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Common\obj\Debug\Vontobel.Middleware.IBT.Common.dll
+D:\Assignments\Vontobel.Middleware.IBT\Vontobel.Middleware.IBT.Common\obj\Debug\Vontobel.Middleware.IBT.Common.pdb
